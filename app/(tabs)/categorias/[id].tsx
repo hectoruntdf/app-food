@@ -1,6 +1,6 @@
 import React from 'react';
 import { View, Text, StyleSheet, ScrollView } from 'react-native';
-import { SafeAreaView } from 'react-native-safe-area-context';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { useLocalSearchParams, useRouter, Stack } from 'expo-router';
 import { productosPorCategoria } from '@/src/data/productosPorCategoria';
 import ProductCard from '@/src/components/ProductCard';
@@ -10,6 +10,7 @@ import { productDetailRoute } from '@/src/navigation/routes';
 
 
 export default function CategoryScreen() {
+  const insets = useSafeAreaInsets();
   const { id } = useLocalSearchParams(); 
   const router = useRouter();
 
@@ -20,10 +21,11 @@ export default function CategoryScreen() {
   return (
     
     
-    <SafeAreaView style={styles.safeArea}>
+    <View style={styles.mainContainer}>
       <CustomHeader 
         leftIcon="menu" 
         rightIcon="user" 
+        paddingTop={insets.top}
         onLeftPress={() => console.log('Abrir menú')}
         onRightPress={() => console.log('Perfil')}
       />
@@ -48,18 +50,18 @@ export default function CategoryScreen() {
         </View>
         <View style={{ height: 40 }} />
       </ScrollView>
-    </SafeAreaView>
+    </View>
   );
 }
 
 const styles = StyleSheet.create({
-  safeArea: { flex: 1, backgroundColor: '#FAFAFA' },
+  mainContainer: { flex: 1, backgroundColor: '#FAFAFA' },
   container: { flex: 1, paddingHorizontal: 20 },
   
   backButton: { padding: 5 },
   headerIcon: { fontSize: 22, color: '#166534', fontWeight: 'bold' },
   headerTitle: { fontSize: 18, fontWeight: '700', color: '#166534' },
-  titleSection: { marginTop: 20, marginBottom: 20 },
+  titleSection: { marginTop: 10, marginBottom: 20 },
   mainTitle: { fontSize: 32, fontWeight: '800', color: '#111', marginBottom: 5 },
   subTitle: { fontSize: 12, color: '#6b7280', fontWeight: '600', letterSpacing: 1 },
   
