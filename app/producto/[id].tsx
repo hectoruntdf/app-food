@@ -5,6 +5,7 @@ import { useRouter } from 'expo-router';
 import { oatMilk } from '@/src/data/oatMilk';
 import NutritionRow from '@/src/components/NutritionRow';
 import MiniBadge from '@/src/components/MiniBadge';
+import CustomHeader from '@/src/components/CustomHeader';
 import ScoreBadge from '@/src/components/ScoreBadge';
 import FloatingHeart from '@/src/components/FloatingHeart';
 import { Feather, MaterialCommunityIcons } from '@expo/vector-icons';
@@ -17,18 +18,16 @@ export default function ProductDetailScreen() {
   return (
     <View style={styles.container}>
       
-      <View style={[styles.whiteHeader, { paddingTop: insets.top }]}>
-        <TouchableOpacity onPress={() => router.back()} style={styles.iconButton}>
-          <Feather name="chevron-left" size={24} color="#166534" />
-        </TouchableOpacity>
-        
-        <Text style={styles.headerTitle}>Digital Epicurean</Text>
-        
-        <TouchableOpacity style={styles.iconButton}>
-          <Feather name="share-2" size={24} color="#166534"/>
-        </TouchableOpacity>
-      </View>
+      <CustomHeader 
+        title="Digital Epicurean"
+        leftIcon="chevron-left" 
+        rightIcon="share-2" 
+        paddingTop={insets.top}
+        onLeftPress={() => router.back()}
+        onRightPress={() => console.log('Compartir')}
+      />
 
+        
       <ScrollView showsVerticalScrollIndicator={false} bounces={false}>
         
         <View style={styles.topHalf}>
@@ -110,26 +109,9 @@ const styles = StyleSheet.create({
     backgroundColor: '#f9fafb',
   },
   
-  whiteHeader: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    backgroundColor: '#FFFFFF',
-    paddingHorizontal: 20,
-    paddingBottom: 15,
-    zIndex: 10,
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.05,
-    shadowRadius: 3,
-    elevation: 3,
-  },
-  iconButton: {
-    width: 40,
-    alignItems: 'center',
-  },
+  
+  
   headerIcon: { fontSize: 24, color: '#166534', fontWeight: 'bold' },
-  headerTitle: { fontSize: 18, color: '#166534', fontWeight: 'bold' },
 
   topHalf: {
     backgroundColor: '#F2786D',
@@ -143,9 +125,9 @@ const styles = StyleSheet.create({
   bottleShadow: {
     position: 'absolute',
     bottom: 30, 
-    width: 140, 
+    width: 150, 
     height: 15, 
-    backgroundColor: 'rgba(0, 0, 0, 0.15)',
+    //backgroundColor: 'rgba(0, 0, 0, 0.15)',
     borderRadius: 50,
     shadowColor: '#000',
     shadowOffset: { width: 0, height: 0 },
@@ -157,13 +139,14 @@ const styles = StyleSheet.create({
 
   bottleImage: {
     width: '100%', 
-    height: '90%',
+    height: '100%',
   },
 
   contentContainer: {
     marginTop: -40, 
     paddingHorizontal: 20,
-    gap: 15, 
+    gap: 15,
+    //backgroundColor:'blue'
   },
 
   cardPrimary: {
@@ -196,7 +179,7 @@ const styles = StyleSheet.create({
 
   brandText: { fontSize: 12, color: '#166534', fontWeight: '800', letterSpacing: 1, marginBottom: 5 },
   productName: { fontSize: 32, fontWeight: '800', color: '#111', lineHeight: 36, marginBottom: 25 },
-  scoresRow: { flexDirection: 'row', justifyContent: 'space-between', marginBottom: 20 },
+  scoresRow: { flexDirection: 'row', justifyContent: 'space-between', marginBottom: 20, gap: 10  },
   miniBadgesContainer: { gap: 12, paddingRight: 20},
   sectionHeader: { flexDirection: 'row', alignItems: 'center', marginBottom: 15, gap: 8 },
   sectionTitle: { fontSize: 18, fontWeight: '700', color: '#111' },
