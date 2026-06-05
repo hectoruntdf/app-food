@@ -1,6 +1,6 @@
 import React from 'react';
 import { View, Text, ScrollView, TouchableOpacity, StyleSheet, Image } from 'react-native';
-import { SafeAreaView } from 'react-native-safe-area-context';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { useRouter } from 'expo-router';
 import { categories } from '@/src/data/categories';
 import { brands } from '@/src/data/brands';
@@ -15,12 +15,14 @@ import { MaterialCommunityIcons } from '@expo/vector-icons';
 // ---(HOME) ---
 export default function HomeScreen() {
   const router = useRouter();
+  const insets = useSafeAreaInsets();
   return (
     
-    <SafeAreaView style={styles.safeArea}>
+    <View style={styles.mainContainer}>
       <CustomHeader 
         leftIcon="menu" 
         rightIcon="user" 
+        paddingTop={insets.top}
         onLeftPress={() => console.log('Abrir menú')}
         onRightPress={() => console.log('Perfil')}
       />
@@ -73,15 +75,16 @@ export default function HomeScreen() {
 
       <TouchableOpacity style={styles.fab} activeOpacity={0.8}>
         <MaterialCommunityIcons name="barcode-scan" size={26} color="#fff" />
+        
       </TouchableOpacity>
-    </SafeAreaView>
+    </View>
   );
 }
 
 const styles = StyleSheet.create({
-  safeArea: {
+  mainContainer: {
     flex: 1,
-    backgroundColor: '#fff',
+    backgroundColor: '#f9fafb',
   },
   container: {
     flex: 1,
