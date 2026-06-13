@@ -4,7 +4,7 @@ export const ROUTES = {
   HOME: "/", // app/(tabs)/index.tsx
   SEARCH: "/search", // app/(tabs)/search.tsx
   FAVORITES: "/favorites", // app/(tabs)/favorites.tsx
-  CATEGORIA: "/categorias/[id]", // app/(tabs)/categorias/[id].tsx
+  CATEGORIA: "/categorias/[id]", // app/categorias/[id].tsx
   PRODUCTO: "/producto/[id]", // app/producto/[id].tsx
 } as const;
 

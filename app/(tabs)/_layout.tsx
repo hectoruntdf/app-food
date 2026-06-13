@@ -1,7 +1,5 @@
 import React from 'react';
 import { Tabs } from 'expo-router';
-import { Text, View } from 'react-native';
-import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import {Ionicons} from '@expo/vector-icons';
 
 export default function RootLayout() {
@@ -21,7 +19,6 @@ export default function RootLayout() {
               size={size}
               color={color}
             />  
-            
           ),
         }}
       />
@@ -57,14 +54,6 @@ export default function RootLayout() {
               color={color}
             />
           ),
-        }}
-      />
-
-      <Tabs.Screen
-        name="categorias/[id]"
-        options={{
-          href: null,
-          headerShown: false
         }}
       />
     </Tabs>
