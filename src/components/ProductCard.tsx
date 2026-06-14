@@ -1,6 +1,8 @@
 import React from 'react';
 import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
 import { Image } from 'expo-image';
+import {NUTRISCORE_COLORS, ECOSCORE_COLORS} from '../constants/theme';
+import ScoreBadge from './ScoreBadge';
 
 type ProductCardProps = {
   product: {
@@ -8,15 +10,17 @@ type ProductCardProps = {
     name: string;
     brand: string;
     nutriScore: string;
-    nutriColor: string;
     ecoScore: string;
-    ecoColor: string;
     imageUrl: string; 
   };
   onPress?: () => void; 
 };
 
 export default function ProductCard({ product, onPress }: ProductCardProps) {
+
+  const badgeNutriColor = NUTRISCORE_COLORS[product.nutriScore] || '#E5E7EB';
+  const badgeEcoColor = ECOSCORE_COLORS[product.ecoScore] || '#E5E7EB';
+
   return (
     <TouchableOpacity 
       style={styles.cardContainer}
@@ -34,12 +38,8 @@ export default function ProductCard({ product, onPress }: ProductCardProps) {
         <Text style={styles.productName}>{product.name}</Text>
         <Text style={styles.productBrand}>{product.brand}</Text>
         <View style={styles.badgesRow}>
-          <View style={[styles.badge, { backgroundColor: product.nutriColor }]}>
-            <Text style={styles.badgeTextWhite}>NUTRI-SCORE {product.nutriScore}</Text>
-          </View>
-          <View style={[styles.badge, { backgroundColor: product.ecoColor }]}>
-            <Text style={styles.badgeTextDark}>ECO-SCORE {product.ecoScore}</Text>
-          </View>
+          <ScoreBadge type="nutri" score={product.nutriScore} />
+          <ScoreBadge type="eco" score={product.ecoScore} />
         </View>
       </View>
       <View style={styles.cardArrow}>
