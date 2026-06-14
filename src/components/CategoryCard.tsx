@@ -2,12 +2,12 @@ import React from 'react';
 import { Text, TouchableOpacity, StyleSheet } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
+import { CATEGORY_COLORS, DEFAULT_CATEGORY_COLOR } from '../constants/theme'; 
 
 export interface Category {
   id: string;
   title: string;
-  colors: readonly [string, string]; 
-  icon: any; 
+  icon: any;
 }
 
 interface CategoryCardProps {
@@ -16,6 +16,9 @@ interface CategoryCardProps {
 }
 
 export default function CategoryCard({ category, onPress }: CategoryCardProps) {
+  
+  const gradientColors = CATEGORY_COLORS[category.title] || DEFAULT_CATEGORY_COLOR;
+
   return (
     <TouchableOpacity 
       style={styles.gridWrapper}
@@ -23,7 +26,7 @@ export default function CategoryCard({ category, onPress }: CategoryCardProps) {
       activeOpacity={0.8}
     >
       <LinearGradient
-        colors={[category.colors[1], category.colors[0]]} 
+        colors={[gradientColors[1], gradientColors[0]]} 
         start={{ x: 0, y: 0 }} 
         end={{ x: 1, y: 1 }}   
         style={styles.gradientCard}
@@ -31,7 +34,7 @@ export default function CategoryCard({ category, onPress }: CategoryCardProps) {
         <MaterialCommunityIcons 
           name={category.icon} 
           size={42} 
-          color="rgba(255, 255, 255, 0.25)" // Blanco semitransparente (marca de agua)
+          color="rgba(255, 255, 255, 0.25)" 
           style={styles.iconBackground}
         />
         
