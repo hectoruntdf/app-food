@@ -2,7 +2,7 @@ import React from 'react';
 import { View, Text, StyleSheet, ScrollView} from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { useRouter } from 'expo-router';
-import { oatMilk } from '@/src/data/oatMilk';
+import { Product } from '@/src/data/product';
 import NutritionRow from '@/src/components/NutritionRow';
 import MiniBadge from '@/src/components/MiniBadge';
 import CustomHeader from '@/src/components/CustomHeader';
@@ -17,7 +17,6 @@ export default function ProductDetailScreen() {
   
   return (
     <View style={styles.container}>
-      
       <CustomHeader 
         title="Digital Epicurean"
         leftIcon="chevron-left" 
@@ -26,15 +25,13 @@ export default function ProductDetailScreen() {
         onLeftPress={() => router.back()}
         onRightPress={() => console.log('Compartir')}
       />
-
-        
       <ScrollView showsVerticalScrollIndicator={false} bounces={false}>
         
         <View style={styles.topHalf}>
           <View style={styles.bottleShadow} />
 
           <Image
-            source={ oatMilk.imageUrl ? { uri: oatMilk.imageUrl } : require('../../assets/images/oatmilk2.png') }
+            source={ Product.imageUrl ? { uri: Product.imageUrl } : require('../../assets/images/oatmilk2.png') }
             style={styles.bottleImage}
             contentFit="contain" 
             transition={300} 
@@ -45,14 +42,14 @@ export default function ProductDetailScreen() {
           <View style={styles.cardPrimary}>
             <FloatingHeart isFavorite={true} onPress={() => {}} />
             
-            <Text style={styles.brandText}>{oatMilk.brand}</Text>
-            <Text style={styles.productName}>{oatMilk.name}</Text>
+            <Text style={styles.brandText}>{Product.brand}</Text>
+            <Text style={styles.productName}>{Product.name}</Text>
 
             <View style={styles.scoresRow}>
-              <DetailScoreBadge type="nutri" value={oatMilk.nutriScore} />             
-              <DetailScoreBadge type="nova" value={oatMilk.novaGroup} />  
+              <DetailScoreBadge type="nutri" value={Product.nutriScore} />             
+              <DetailScoreBadge type="nova" value={Product.novaGroup} />  
 
-              <DetailScoreBadge type="eco" value={oatMilk.ecoScore} />
+              <DetailScoreBadge type="eco" value={Product.ecoScore} />
             </View>
 
             <ScrollView
@@ -72,7 +69,7 @@ export default function ProductDetailScreen() {
               <Text style={styles.sectionTitle}>Ingredients</Text>
             </View>
 
-            <Text style={styles.ingredientsText}>{oatMilk.ingredients}</Text>
+            <Text style={styles.ingredientsText}>{Product.ingredients}</Text>
             
             <View style={styles.allergenAlert}>
               <View style={styles.allergenHeader}>
@@ -80,12 +77,12 @@ export default function ProductDetailScreen() {
                 <Text style={styles.allergenTitle}>ALLERGEN INFORMATION</Text>
               </View>
               
-              <Text style={styles.allergenText}>{oatMilk.allergen}</Text>
+              <Text style={styles.allergenText}>{Product.allergen}</Text>
             </View>
           </View>
           <View style={styles.cardTertiary}>
             <Text style={styles.sectionTitle}>Nutritional Values (per 100ml)</Text>
-            {oatMilk.nutritionalValues.map((item) => (
+            {Product.nutritionalValues.map((item) => (
               <NutritionRow 
                 key={item.id}
                 label={item.label}
@@ -109,11 +106,7 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: '#f9fafb',
   },
-  
-  
-  
   headerIcon: { fontSize: 24, color: '#166534', fontWeight: 'bold' },
-
   topHalf: {
     backgroundColor: '#F2786D',
     height: 420, 
@@ -122,7 +115,6 @@ const styles = StyleSheet.create({
     position: 'relative',
     paddingTop: 20, 
   },
-
   bottleShadow: {
     position: 'absolute',
     bottom: 30, 
@@ -137,19 +129,16 @@ const styles = StyleSheet.create({
     elevation: 3, 
     transform: [{ translateX: 25 }], 
   },
-
   bottleImage: {
     width: '100%', 
     height: '100%',
   },
-
   contentContainer: {
     marginTop: -40, 
     paddingHorizontal: 20,
     gap: 15,
     //backgroundColor:'blue'
   },
-
   cardPrimary: {
     backgroundColor: '#FFFFFF', 
     borderRadius: 35, 
