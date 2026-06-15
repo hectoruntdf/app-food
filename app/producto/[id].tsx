@@ -1,15 +1,15 @@
 import React from 'react';
-import { View, Text, StyleSheet, ScrollView, TouchableOpacity } from 'react-native';
+import { View, Text, StyleSheet, ScrollView} from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { useRouter } from 'expo-router';
 import { oatMilk } from '@/src/data/oatMilk';
 import NutritionRow from '@/src/components/NutritionRow';
 import MiniBadge from '@/src/components/MiniBadge';
 import CustomHeader from '@/src/components/CustomHeader';
-import ScoreBadge from '@/src/components/ScoreBadge';
 import FloatingHeart from '@/src/components/FloatingHeart';
 import { Feather, MaterialCommunityIcons } from '@expo/vector-icons';
 import { Image } from 'expo-image';
+import DetailScoreBadge from '@/src/components/DetailScoreBadge';
 
 export default function ProductDetailScreen() {
   const router = useRouter();
@@ -34,7 +34,7 @@ export default function ProductDetailScreen() {
           <View style={styles.bottleShadow} />
 
           <Image
-            source={ require('../../assets/images/oatmilk2.png') }
+            source={ oatMilk.imageUrl ? { uri: oatMilk.imageUrl } : require('../../assets/images/oatmilk2.png') }
             style={styles.bottleImage}
             contentFit="contain" 
             transition={300} 
@@ -49,9 +49,10 @@ export default function ProductDetailScreen() {
             <Text style={styles.productName}>{oatMilk.name}</Text>
 
             <View style={styles.scoresRow}>
-              <ScoreBadge label="NUTRI-SCORE" value="A" color="#16A34A" />
-              <ScoreBadge label="NOVA GROUP" value="1" color="#FACC15" isDarkText />
-              <ScoreBadge label="ECO-SCORE" value="A" color="#16A34A" />
+              <DetailScoreBadge type="nutri" value={oatMilk.nutriScore} />             
+              <DetailScoreBadge type="nova" value={oatMilk.novaGroup} />  
+
+              <DetailScoreBadge type="eco" value={oatMilk.ecoScore} />
             </View>
 
             <ScrollView
