@@ -1,8 +1,4 @@
-export type Categoria = {
-    id: string;
-    title: string;
-    icon: string;
-};
+import { Categoria } from '@/src/types/category';
 
 export const categories: Categoria[] = [
   { id: '1', title: 'beverages', icon: 'glass-cocktail' }, 

@@ -1,11 +1,4 @@
-export type Product = {
-  id: string;
-  name: string;
-  brand: string;
-  nutriScore: string;
-  ecoScore: string;
-  imageUrl: string; 
-};
+import { Product } from '@/src/types/product';
 
 const DEFAULT_PRODUCT_IMAGE = 'https://placehold.co/150x200/png';
 

@@ -1,9 +1,4 @@
-export type Brand = {
-    id: string;
-    name: string;
-    logo: string; 
-};
-
+import { Brand } from '@/src/types/brand';
 const DEFAULT_IMAGE = 'https://placehold.co/100x100/png';
 
 export const brands: Brand[] = [
