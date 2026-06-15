@@ -1,14 +1,13 @@
-type NutritionalValue = {
-  id: string;
-  label: string;
-  value: string;
-  isBold?: boolean;
-  isIndented?: boolean;
-};
+import { ProductDetail } from '@/src/types/product';
 
-export const oatMilk = {
+export const Product: ProductDetail = {
   brand: 'OATLY',
   name: 'The Original\nOatly Oat Milk',
+  nutriScore: 'A',
+  novaGroup: 1,
+  ecoScore: 'A',
+  imageUrl: '',
+  
   ingredients: 'Water, Oats (10%), Rapeseed oil, Minerals (Calcium carbonate, Dibasic calcium phosphate, Potassium iodide), Salt, Vitamins (D2, Riboflavin, B12).',
   allergen: 'Contains gluten (oats). Dairy-free and soy-free.',
   nutritionalValues: [
@@ -22,4 +21,3 @@ export const oatMilk = {
     { id: '8', label: 'Salt', value: '0.10g', isBold: true },
   ]
 };
-
