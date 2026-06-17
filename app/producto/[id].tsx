@@ -1,8 +1,8 @@
 import React from 'react';
-import { View, Text, StyleSheet, ScrollView} from 'react-native';
+import { View, Text, StyleSheet, ScrollView, ActivityIndicator} from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
-import { useRouter } from 'expo-router';
-import { Product } from '@/src/data/product';
+import { useRouter, useLocalSearchParams } from 'expo-router';
+//import { Product } from '@/src/data/product';
 import NutritionRow from '@/src/components/NutritionRow';
 import MiniBadge from '@/src/components/MiniBadge';
 import CustomHeader from '@/src/components/CustomHeader';
@@ -11,9 +11,48 @@ import { Feather, MaterialCommunityIcons } from '@expo/vector-icons';
 import { Image } from 'expo-image';
 import DetailScoreBadge from '@/src/components/DetailScoreBadge';
 
+import { useProduct } from '@/src/hooks/useProduct';
+
 export default function ProductDetailScreen() {
   const router = useRouter();
   const insets = useSafeAreaInsets();
+
+  const { id } = useLocalSearchParams();
+  const { data: Product, isLoading, error } = useProduct(id as string);
+  
+  if (isLoading) {
+    return (
+      <View style={[styles.container, { justifyContent: 'center', alignItems: 'center' }]}>
+        <ActivityIndicator size="large" color="#166534" />
+        <Text style={{ marginTop: 10, color: '#166534' }}>Loading product details...</Text>
+      </View>
+    );
+  }
+
+  if (error || !Product) {
+    return (
+      <View style={[styles.container, { justifyContent: 'center', alignItems: 'center', padding: 20 }]}>
+        <Feather name="alert-triangle" size={48} color="#B91C1C" />
+        <Text style={{ marginTop: 15, color: '#B91C1C', fontSize: 16, textAlign: 'center' }}>
+          Oops! No pudimos cargar los detalles del producto. Por favor, intenta escanear otro código de barras.
+        </Text>
+      </View>
+    );
+  }
+
+  const getNutrientValue = (nutrientId: string) => {
+    const nutrient = Product.nutritionalValues.find(n => n.id === nutrientId);
+    return nutrient ? nutrient.value : '-';
+  };
+
+  const featuredPills = [
+    { id: 'energy', label: 'ENERGY' },
+    { id: 'fat', label: 'FAT' },
+    { id: 'protein', label: 'PROTEIN' },
+    { id: 'carbs', label: 'CARBS' },
+    { id: 'sugars', label: 'SUGARS' },
+    { id: 'salt', label: 'SALT' },
+  ];
   
   return (
     <View style={styles.container}>
@@ -55,11 +94,16 @@ export default function ProductDetailScreen() {
             <ScrollView
               horizontal={true}
               showsHorizontalScrollIndicator={false}
-              contentContainerStyle={styles.miniBadgesContainer}>
-              <MiniBadge label="ENERGY" value="193 kJ" />
-              <MiniBadge label="FAT" value="1.5g" />
-              <MiniBadge label="PROTEIN" value="1.0g" />
-              <MiniBadge label="CARBS" value="6.7g" />
+              contentContainerStyle={styles.miniBadgesContainer}
+            >
+              
+              {featuredPills.map((pill) => (
+                <MiniBadge 
+                  key={pill.id}
+                  label={pill.label}
+                  value={getNutrientValue(pill.id)}
+                />
+              ))}
             </ScrollView>
           </View>
 
@@ -81,7 +125,7 @@ export default function ProductDetailScreen() {
             </View>
           </View>
           <View style={styles.cardTertiary}>
-            <Text style={styles.sectionTitle}>Nutritional Values (per 100ml)</Text>
+            <Text style={styles.sectionTitle}>Nutritional Values (per {Product.nutritionBase || '100g'})</Text>
             {Product.nutritionalValues.map((item) => (
               <NutritionRow 
                 key={item.id}

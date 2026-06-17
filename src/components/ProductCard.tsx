@@ -1,7 +1,6 @@
 import React from 'react';
 import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
 import { Image } from 'expo-image';
-import {NUTRISCORE_COLORS, ECOSCORE_COLORS} from '../constants/theme';
 import ScoreBadge from './ScoreBadge';
 
 type ProductCardProps = {
@@ -17,10 +16,6 @@ type ProductCardProps = {
 };
 
 export default function ProductCard({ product, onPress }: ProductCardProps) {
-
-  const badgeNutriColor = NUTRISCORE_COLORS[product.nutriScore] || '#E5E7EB';
-  const badgeEcoColor = ECOSCORE_COLORS[product.ecoScore] || '#E5E7EB';
-
   return (
     <TouchableOpacity 
       style={styles.cardContainer}
@@ -73,9 +68,6 @@ const styles = StyleSheet.create({
   productName: { fontSize: 16, fontWeight: '700', color: '#111', lineHeight: 20, marginBottom: 4 },
   productBrand: { fontSize: 11, color: '#6b7280', fontWeight: '600', marginBottom: 10 },
   badgesRow: { flexDirection: 'row', gap: 8 },
-  badge: { paddingHorizontal: 8, paddingVertical: 4, borderRadius: 4 },
-  badgeTextWhite: { color: '#fff', fontSize: 9, fontWeight: '800' },
-  badgeTextDark: { color: '#166534', fontSize: 9, fontWeight: '800' },
   cardArrow: { paddingLeft: 10 },
   arrowText: { fontSize: 20, color: '#d1d5db', fontWeight: '300' }
 });

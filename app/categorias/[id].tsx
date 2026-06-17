@@ -1,21 +1,29 @@
 import React from 'react';
-import { View, Text, StyleSheet, FlatList } from 'react-native';
+import { ActivityIndicator, View, Text, StyleSheet, FlatList } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { useLocalSearchParams, useRouter, Stack } from 'expo-router';
-import { productosPorCategoria } from '@/src/data/productosPorCategoria';
 import ProductCard from '@/src/components/ProductCard';
 import Search from '@/src/components/SearchBar';
 import CustomHeader from '@/src/components/CustomHeader';
 import { productDetailRoute } from '@/src/navigation/routes';
+
+import { useCategories } from '@/src/hooks/useCategories';
 
 export default function CategoryScreen() {
   const insets = useSafeAreaInsets();
   const { id } = useLocalSearchParams(); 
   const router = useRouter();
 
-  const currentCategory = id && typeof id === 'string' ? id.toLowerCase() : '';
-  const listaProductos = productosPorCategoria[currentCategory] || productosPorCategoria.default;
+  const { data: products, isLoading, error } = useCategories(id as string);
 
+  if (isLoading) {
+    return <ActivityIndicator size="large" color="#0000ff" style={{ marginTop: 50 }} />;
+  } 
+  if (error || !products || products.length === 0) {
+    return <Text style={{ textAlign: 'center', marginTop: 50 }}>No hay productos en esta categoría.</Text>;
+  }
+
+  const currentCategory = id && typeof id === 'string' ? id.toLowerCase() : '';
   const txtTitulo = currentCategory.charAt(0).toUpperCase() + currentCategory.slice(1);
 
   return (
@@ -31,7 +39,7 @@ export default function CategoryScreen() {
       />
 
       <FlatList
-        data={listaProductos}
+        data={products}
         keyExtractor={(item) => item.id.toString()}
         showsVerticalScrollIndicator={false}
         contentContainerStyle={styles.listContent}
@@ -40,7 +48,7 @@ export default function CategoryScreen() {
           <View style={styles.headerComponentContainer}>
             <View style={styles.titleSection}>
               <Text style={styles.mainTitle}>{txtTitulo}</Text>
-              <Text style={styles.subTitle}>{listaProductos.length} ITEMS FOUND</Text>
+              <Text style={styles.subTitle}>{products.length} ITEMS FOUND</Text>
             </View>
 
             <Search placeholder={`Search ${txtTitulo}...`} />
@@ -70,7 +78,7 @@ const styles = StyleSheet.create({
     paddingBottom: 40, 
   },
   headerComponentContainer: {
-    marginBottom: 5, // Espacio entre el buscador y el primer producto
+    marginBottom: 5,
   },
   titleSection: { 
     marginTop: 10, 

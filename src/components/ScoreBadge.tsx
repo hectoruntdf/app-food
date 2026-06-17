@@ -1,4 +1,3 @@
-// src/components/ScoreBadge.tsx
 import React from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 import { NUTRISCORE_COLORS, ECOSCORE_COLORS, NOVA_COLORS } from '../constants/theme';
@@ -32,13 +31,16 @@ export default function ScoreBadge({ type, score }: ScoreBadgeProps) {
 
 const styles = StyleSheet.create({
   badge: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
     paddingHorizontal: 8,
     paddingVertical: 4,
     borderRadius: 4,
-    alignSelf: 'flex-start', 
   },
   badgeText: {
     fontSize: 9,
     fontWeight: '800',
+    textAlign: 'center',
   },
 });
