@@ -1,14 +1,14 @@
 import { Categoria } from '@/src/types/category';
 
 export const categories: Categoria[] = [
-  { id: '1', title: 'beverages', icon: 'glass-cocktail' }, 
-  { id: '2', title: 'dairies', icon: 'egg' },    
-  { id: '3', title: 'snacks', icon: 'cookie' },     
-  { id: '4', title: 'breakfasts', icon: 'food-croissant' }, 
-  { id: '5', title: 'desserts', icon: 'cupcake' },   
-  { id: '6', title: 'chocolates', icon: 'peanut' }, 
-  { id: '7', title: 'biscuits-and-cakes', icon: 'baguette' }, 
-  { id: '8', title: 'cereals-and-potatoes', icon: 'leaf' }, 
-  { id: '9', title: 'meals', icon: 'silverware-fork-knife' },      
-  { id: '10', title: 'plant-based-foods', icon: 'food-apple' }, 
+  { id: 'beverages', title: 'beverages', icon: 'glass-cocktail' }, 
+  { id: 'dairies', title: 'dairies', icon: 'egg' },    
+  { id: 'snacks', title: 'snacks', icon: 'cookie' },     
+  { id: 'breakfasts', title: 'breakfasts', icon: 'food-croissant' }, 
+  { id: 'desserts', title: 'desserts', icon: 'cupcake' },   
+  { id: 'chocolates', title: 'chocolates', icon: 'peanut' }, 
+  { id: 'biscuits-and-cakes', title: 'biscuits-and-cakes', icon: 'baguette' }, 
+  { id: 'cereals-and-potatoes', title: 'cereals-and-potatoes', icon: 'leaf' }, 
+  { id: 'meals', title: 'meals', icon: 'silverware-fork-knife' },      
+  { id: 'plant-based-foods', title: 'plant-based-foods', icon: 'food-apple' }, 
 ];

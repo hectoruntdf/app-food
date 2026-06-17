@@ -13,6 +13,7 @@ export type NutritionalValue = {
   value: string;
   isBold?: boolean;
   isIndented?: boolean;
+  isSubItem?: boolean;
 };
 
 export type ProductDetail = {
@@ -25,4 +26,5 @@ export type ProductDetail = {
   ingredients: string;
   allergen: string;
   nutritionalValues: NutritionalValue[];
+  nutritionBase?: string;
 };

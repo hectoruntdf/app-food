@@ -4,7 +4,7 @@ const DEFAULT_PRODUCT_IMAGE = 'https://placehold.co/150x200/png';
 
 export const productosPorCategoria: Record<string, Product[]> = {
   beverages: [
-    { id: '1', name: 'Organic Cold Pressed\nKale & Ginger', brand: 'GREEN GARDEN CO.', nutriScore: 'A', ecoScore: 'A+', imageUrl: DEFAULT_PRODUCT_IMAGE },
+    { id: '7790387110159', name: 'Coca-Cola (Prueba API)', brand: 'Coca-Cola', nutriScore: 'a', ecoScore: 'd', imageUrl: DEFAULT_PRODUCT_IMAGE },
     { id: '2', name: 'Artisan Sparkling\nBotanical Mist', brand: 'MIST & FLORA', nutriScore: 'C', ecoScore: 'B', imageUrl: DEFAULT_PRODUCT_IMAGE },
     { id: '3', name: 'Wild Berry Raw\nKombucha', brand: 'THE FERMENTARY', nutriScore: 'B', ecoScore: 'A', imageUrl: DEFAULT_PRODUCT_IMAGE },
     { id: '4', name: 'Pure Philippine\nCoconut Water', brand: 'ISLA VIDA', nutriScore: 'A', ecoScore: 'B+', imageUrl: DEFAULT_PRODUCT_IMAGE },
