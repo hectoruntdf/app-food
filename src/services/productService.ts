@@ -1,5 +1,5 @@
 
-const BASE_URL = process.env.EXPO_PUBLIC_API_URL || 'https://world.openfoodfacts.org/api';
+const BASE_URL = process.env.EXPO_PUBLIC_API_URL;
 
 const HEADERS = {
   "User-Agent": "UNTDF TNT 2026",
