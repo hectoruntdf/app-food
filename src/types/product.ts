@@ -1,4 +1,6 @@
-export type Product = {
+export type Score = 'A' | 'B' | 'C' | 'D' | 'E' | '?' | '-';
+
+export interface Product {
   id: string;
   name: string;
   brand: string;
@@ -7,7 +9,7 @@ export type Product = {
   imageUrl: string;
 };
 
-export type NutritionalValue = {
+export interface NutritionalValue {
   id: string;
   label: string;
   value: string;
@@ -16,15 +18,11 @@ export type NutritionalValue = {
   isSubItem?: boolean;
 };
 
-export type ProductDetail = {
-  brand: string;
-  name: string;
-  imageUrl: string;
-  nutriScore: string;
-  novaGroup: string | number;
-  ecoScore: string;
+export interface ProductDetail extends Omit<Product, 'id'> {
+  id: string;
+  novaGroup: number | null;
   ingredients: string;
-  allergen: string;
+  allergens: string;
   nutritionalValues: NutritionalValue[];
-  nutritionBase?: string;
+  nutritionBase?: '100g' | '100ml';
 };

@@ -1,4 +1,4 @@
-import { ProductDetail, Product } from '../types/product';
+import { ProductDetail, Product, NutritionalValue } from '../types/product';
 import { OFFProduct } from '../types/openFoodFacts';
 import { NUTRIENT_DICTIONARY } from '../constants/nutrients';
 
@@ -21,7 +21,7 @@ export const transformProductData = (apiData: { product: OFFProduct; status: num
   );
 
   return {
-    
+    id: p.code,
     brand: p.brands || 'Marca desconocida',
     name: p.product_name || 'Producto sin nombre',
     imageUrl: p.image_url || 'https://placehold.co/150x200/png',
@@ -29,16 +29,16 @@ export const transformProductData = (apiData: { product: OFFProduct; status: num
     nutritionBase: isLiquid ? '100ml' : '100g',
     
     nutriScore: sanitizeScore(p.nutriscore_grade),
-    novaGroup: p.nova_group || '?',
+    novaGroup: p.nova_group != null ? p.nova_group : null,
     ecoScore: sanitizeScore(p.ecoscore_grade),
     ingredients: p.ingredients_text || 'Lista de ingredientes no disponible.',
-    allergen: p.allergens ? p.allergens.replace(/en:/g, '') : 'No especificados',
+    allergens: p.allergens ? p.allergens.replace(/en:/g, '') : 'No especificados',
     
     // Extraemos los nutrientes disponibles usando el diccionario para mapearlos a etiquetas legibles
     nutritionalValues: (() => {
       if (!p.nutriments) return [];
 
-      const availableNutrients: any[] = [];
+      const availableNutrients: NutritionalValue[] = [];
 
       // Queremos combinar kcal y kJ
       if (p.nutriments['energy-kcal_100g'] !== undefined) {
