@@ -9,7 +9,7 @@ import CategoryCard from '@/src/components/CategoryCard';
 import TasteTag from '@/src/components/TasteTag';
 import BrandCard from '@/src/components/BrandCard';
 import CustomHeader from '@/src/components/CustomHeader';
-import { categoryRoute } from '@/src/navigation/routes';
+import { categoryRoute, brandRoute, tasteRoute } from '@/src/navigation/routes';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 
 // ---(HOME) ---
@@ -23,6 +23,7 @@ export default function HomeScreen() {
         leftIcon="menu" 
         rightIcon="user" 
         paddingTop={insets.top}
+        title="Digital Epicurean"
         onLeftPress={() => console.log('Abrir menú')}
         onRightPress={() => console.log('Perfil')}
       />
@@ -66,7 +67,11 @@ export default function HomeScreen() {
         <Text style={styles.brandsSubtitle}>Explored through the lens of quality.</Text>
         <View style={styles.brandsGrid}>
           {brands.map((brand) => (
-            <BrandCard key={brand.id} brand={brand} />
+            <BrandCard
+              key={brand.id}
+              brand={brand}
+              onPress={() => router.push(brandRoute(brand.id))}
+            />
           ))}
         </View>
 

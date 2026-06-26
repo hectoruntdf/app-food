@@ -6,6 +6,7 @@ export const ROUTES = {
   FAVORITES: "/favorites", // app/(tabs)/favorites.tsx
   CATEGORIA: "/categorias/[id]", // app/categorias/[id].tsx
   PRODUCTO: "/producto/[id]", // app/producto/[id].tsx
+  MARCA: "/marcas/[id]", // app/marcas/[id].tsx
 } as const;
 
 export type AppRoute = (typeof ROUTES)[keyof typeof ROUTES];
@@ -28,4 +29,7 @@ export function productDetailRoute(id: string) {
 
 export function categoryRoute(id: string) {
   return buildRoute(ROUTES.CATEGORIA, { id });
+}
+export function brandRoute(id: string) {
+  return buildRoute(ROUTES.MARCA, { id });
 }

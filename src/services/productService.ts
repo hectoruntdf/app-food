@@ -34,8 +34,6 @@ export const fetchProductsByCategory = async (categorySlug: string) => {
       page_size: "20",
     });
 
-    //const url = `https://world.openfoodfacts.org/api/v2/search?${params.toString()}`;
-
     const url = `${BASE_URL}/v2/search?${params.toString()}`;
     const response = await fetch(url, { headers: HEADERS, });
 
@@ -47,6 +45,29 @@ export const fetchProductsByCategory = async (categorySlug: string) => {
     
   } catch (error) {
     console.error('Error en fetchProductsByCategory:', error);
+    throw error;
+  }
+};
+
+export const fetchProductsByBrand = async (brandSlug: string) => {
+  try {
+    const params = new URLSearchParams({
+      brands_tags: brandSlug,
+      fields: "code,product_name,brands,image_url,nutriscore_grade,ecoscore_grade",
+      page_size: "20",
+    });
+
+    const url = `${BASE_URL}/v2/search?${params.toString()}`;
+    const response = await fetch(url, { headers: HEADERS, });
+
+    if (!response.ok) {
+      throw new Error(`Error al cargar la marca: ${response.status}`);
+    }
+
+    return await response.json();
+    
+  } catch (error) {
+    console.error('Error en fetchProductsByBrand:', error);
     throw error;
   }
 };

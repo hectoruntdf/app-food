@@ -1,5 +1,5 @@
 import React from "react";
-import { View, Text, StyleSheet } from "react-native";
+import { View, Text, StyleSheet, Pressable } from "react-native";
 import { Image } from 'expo-image';
 
 type BrandCardProps = {
@@ -7,11 +7,12 @@ type BrandCardProps = {
     name: string;
     logo: string; 
   };
+  onPress?: () => void;
 };
 
-export default function BrandCard({ brand }: BrandCardProps) {
+export default function BrandCard({ brand, onPress }: BrandCardProps) {
   return (
-    <View style={styles.brandCard}>
+    <Pressable style={styles.brandCard} onPress={onPress}>
       <Image 
         source={{ uri: brand.logo }} 
         style={styles.brandLogoImage} 
@@ -19,7 +20,7 @@ export default function BrandCard({ brand }: BrandCardProps) {
         transition={200} // Animación suave al cargar
       />
       <Text style={styles.brandName}>{brand.name}</Text>
-    </View>
+    </Pressable>
   );
 }
 
