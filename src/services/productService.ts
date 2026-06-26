@@ -1,8 +1,9 @@
 
 const BASE_URL = process.env.EXPO_PUBLIC_API_URL;
+const CONTACTO = process.env.USER_AGENT_CONTACT || "https://my-app-food.com";
 
 const HEADERS = {
-  "User-Agent": "UNTDF TNT 2026",
+  "User-Agent": `my-app-food/1.0.0 (${CONTACTO})`,
 };
 
 export const fetchProductByBarcode = async (barcode: string) => {
