@@ -6,14 +6,14 @@ import { StatusBar } from 'expo-status-bar';
 interface CustomHeaderProps {
   title?: string;
   leftIcon: keyof typeof Feather.glyphMap; 
-  rightIcon: keyof typeof Feather.glyphMap; 
+  rightIcon?: keyof typeof Feather.glyphMap; 
   paddingTop: number;
   onLeftPress: () => void;
-  onRightPress: () => void;
+  onRightPress?: () => void;
 }
 
 export default function CustomHeader({
-  title = "Digital Epicurean",
+  title,
   leftIcon,
   rightIcon,
   paddingTop,
@@ -38,9 +38,14 @@ export default function CustomHeader({
           <Text style={styles.headerTitle}>{title}</Text>
         </View>
 
-        <TouchableOpacity onPress={onRightPress} style={styles.rightColumn}>
-          <Feather name={rightIcon} size={24} color="#166534" />
-        </TouchableOpacity>
+        <View style={styles.rightColumn}>
+          {rightIcon && onRightPress && (
+            <TouchableOpacity onPress={onRightPress} >
+              <Feather name={rightIcon} size={24} color="#166534" />
+            </TouchableOpacity>
+          )}
+        </View>
+        
       </View>
     </View>
   );
@@ -49,7 +54,6 @@ export default function CustomHeader({
 const styles = StyleSheet.create({
   headerContainer: {
     width: '100%',
-    //paddingBottom: 15,
     backgroundColor: '#ffffff',
     zIndex: 10,
     shadowColor: '#000',
@@ -65,7 +69,6 @@ const styles = StyleSheet.create({
     paddingHorizontal: 20,
     paddingTop:15,
     paddingBottom: 15,
-    //backgroundColor: 'rgba(255, 0, 0, 0.2)',
   },
   
   leftColumn: {
@@ -87,13 +90,11 @@ const styles = StyleSheet.create({
     width: 40, 
     alignItems: 'center',
     justifyContent: 'center',
-    //backgroundColor: 'rgba(0, 0, 255, 0.2)',
   },
   
   headerTitle: {
     fontSize: 18,
     fontWeight: '700',
     color: '#166534',
-    //backgroundColor: 'rgba(0, 255, 0, 0.2)',
   },
 });

@@ -1,21 +1,17 @@
 import React from 'react';
 import { View, Text, StyleSheet, ScrollView, ActivityIndicator} from 'react-native';
-import { useSafeAreaInsets } from 'react-native-safe-area-context';
-import { useRouter, useLocalSearchParams } from 'expo-router';
-//import { Product } from '@/src/data/product';
+import { useLocalSearchParams, Stack } from 'expo-router';
 import NutritionRow from '@/src/components/NutritionRow';
 import MiniBadge from '@/src/components/MiniBadge';
-import CustomHeader from '@/src/components/CustomHeader';
 import FloatingHeart from '@/src/components/FloatingHeart';
 import { Feather, MaterialCommunityIcons } from '@expo/vector-icons';
 import { Image } from 'expo-image';
 import DetailScoreBadge from '@/src/components/DetailScoreBadge';
 
+
 import { useProduct } from '@/src/hooks/useProduct';
 
 export default function ProductDetailScreen() {
-  const router = useRouter();
-  const insets = useSafeAreaInsets();
 
   const { id } = useLocalSearchParams();
   const { data: Product, isLoading, error } = useProduct(id as string);
@@ -24,7 +20,7 @@ export default function ProductDetailScreen() {
     return (
       <View style={[styles.container, { justifyContent: 'center', alignItems: 'center' }]}>
         <ActivityIndicator size="large" color="#166534" />
-        <Text style={{ marginTop: 10, color: '#166534' }}>Loading product details...</Text>
+        {/* <Text style={{ marginTop: 10, color: '#166534' }}>Loading product details...</Text> */}
       </View>
     );
   }
@@ -42,8 +38,8 @@ export default function ProductDetailScreen() {
 
   const getNutrientValue = (nutrientId: string) => {
     const nutrient = Product.nutritionalValues.find(n => n.id === nutrientId);
-    return nutrient ? nutrient.value : '-';
-  };
+    return nutrient?.value ?? '-';
+  };  
 
   const featuredPills = [
     { id: 'energy', label: 'ENERGY' },
@@ -56,23 +52,14 @@ export default function ProductDetailScreen() {
   
   return (
     <View style={styles.container}>
-      <CustomHeader 
-        title="Digital Epicurean"
-        leftIcon="chevron-left" 
-        rightIcon="share-2" 
-        paddingTop={insets.top}
-        onLeftPress={() => router.back()}
-        onRightPress={() => console.log('Compartir')}
-      />
+      
       <ScrollView showsVerticalScrollIndicator={false} bounces={false}>
         
         <View style={styles.topHalf}>
-          <View style={styles.bottleShadow} />
-
           <Image
             source={ Product.imageUrl ? { uri: Product.imageUrl } : require('../../assets/images/oatmilk2.png') }
             style={styles.bottleImage}
-            contentFit="contain" 
+            contentFit="contain"    
             transition={300} 
           />
         </View>
@@ -85,10 +72,10 @@ export default function ProductDetailScreen() {
             <Text style={styles.productName}>{Product.name}</Text>
 
             <View style={styles.scoresRow}>
-              <DetailScoreBadge type="nutri" value={Product.nutriScore} />             
-              <DetailScoreBadge type="nova" value={Product.novaGroup} />  
+              <DetailScoreBadge type="nutri" value={Product.nutriScore ?? '-'} />             
+              <DetailScoreBadge type="nova" value={Product.novaGroup ?? '-'} />  
 
-              <DetailScoreBadge type="eco" value={Product.ecoScore} />
+              <DetailScoreBadge type="eco" value={Product.ecoScore ?? '-'} />
             </View>
 
             <ScrollView
@@ -115,14 +102,7 @@ export default function ProductDetailScreen() {
 
             <Text style={styles.ingredientsText}>{Product.ingredients}</Text>
             
-            <View style={styles.allergenAlert}>
-              <View style={styles.allergenHeader}>
-                <Feather name="alert-triangle" size={16} color="#B91C1C" />
-                <Text style={styles.allergenTitle}>ALLERGEN INFORMATION</Text>
-              </View>
-              
-              <Text style={styles.allergenText}>{Product.allergen}</Text>
-            </View>
+            
           </View>
           <View style={styles.cardTertiary}>
             <Text style={styles.sectionTitle}>Nutritional Values (per {Product.nutritionBase || '100g'})</Text>
@@ -130,7 +110,7 @@ export default function ProductDetailScreen() {
               <NutritionRow 
                 key={item.id}
                 label={item.label}
-                value={item.value}
+                value={item.value ?? '-'}
                 isBold={item.isBold}
                 isIndented={item.isIndented}
               />
@@ -159,20 +139,7 @@ const styles = StyleSheet.create({
     position: 'relative',
     paddingTop: 20, 
   },
-  bottleShadow: {
-    position: 'absolute',
-    bottom: 30, 
-    width: 150, 
-    height: 15, 
-    //backgroundColor: 'rgba(0, 0, 0, 0.15)',
-    borderRadius: 50,
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 0 },
-    shadowOpacity: 0.5,
-    shadowRadius: 10,
-    elevation: 3, 
-    transform: [{ translateX: 25 }], 
-  },
+  
   bottleImage: {
     width: '100%', 
     height: '100%',
