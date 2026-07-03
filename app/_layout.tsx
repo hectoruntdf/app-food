@@ -33,6 +33,7 @@ export default function RootLayoutNav() {
         <Stack.Screen name="categorias/[id]" options={detailScreenOptions}/>
         <Stack.Screen name="marcas/[id]" options={detailScreenOptions}/>
         <Stack.Screen name="producto/[id]" options={detailScreenOptions}/>
+        <Stack.Screen name='sabores/[id]' options={detailScreenOptions}/>
 
       </Stack>
     </QueryClientProvider>

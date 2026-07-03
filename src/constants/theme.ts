@@ -38,3 +38,8 @@ export const NOVA_COLORS: Record<string, string> = {
   '3': '#F58220', 
   '4': '#E63E11', 
 };
+
+export const NAV_COLORS = {
+  HEADER_TINT: '#166534',
+  HEADER_BACKGROUND: '#FAFAFA',
+} as const;

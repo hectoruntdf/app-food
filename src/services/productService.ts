@@ -41,9 +41,9 @@ export const fetchProductsByCategory = async (categorySlug: string) => {
     if (!response.ok) {
       throw new Error(`Error al cargar la categoría: ${response.status}`);
     }
-
+         
     return await response.json();
-    
+
   } catch (error) {
     console.error('Error en fetchProductsByCategory:', error);
     throw error;
@@ -69,6 +69,29 @@ export const fetchProductsByBrand = async (brandSlug: string) => {
     
   } catch (error) {
     console.error('Error en fetchProductsByBrand:', error);
+    throw error;
+  }
+};
+
+export const fetchProductsByTaste = async (tasteSlug: string) => {
+  try {
+    const params = new URLSearchParams({
+      // OpenFoodFacts usa labels_tags
+      labels_tags: tasteSlug, 
+      fields: "code,product_name,brands,image_url,nutriscore_grade,ecoscore_grade",
+      page_size: "20",
+    });
+
+    const url = `${BASE_URL}/v2/search?${params.toString()}`;
+    const response = await fetch(url, { headers: HEADERS });
+
+    if (!response.ok) {
+      throw new Error(`Error al cargar la etiqueta de sabor: ${response.status}`);
+    }
+
+    return await response.json();
+  } catch (error) {
+    console.error('Error en fetchProductsByTaste:', error);
     throw error;
   }
 };

@@ -57,7 +57,11 @@ export default function HomeScreen() {
         </View>
         <ScrollView horizontal showsHorizontalScrollIndicator={false} style={styles.tasteScrollView}>
           {tasteTags.map((tag, index) => (
-            <TasteTag key={index} label={tag}/>
+            <TasteTag
+              key={index}
+              label={tag}
+              onPress={() => router.push(tasteRoute(tag.toLocaleLowerCase()))}
+            />
           ))}
         </ScrollView>
 
