@@ -12,14 +12,14 @@ type ProductCardProps = {
     ecoScore: string;
     imageUrl: string; 
   };
-  onPress?: () => void; 
+  onPressItem?: (id: string) => void; 
 };
 
-export default function ProductCard({ product, onPress }: ProductCardProps) {
+function ProductCard({ product, onPressItem }: ProductCardProps) {
   return (
     <TouchableOpacity 
       style={styles.cardContainer}
-      onPress={onPress} 
+      onPress={() => onPressItem?.(product.id)} 
       activeOpacity={0.8}
     >
       <Image 
@@ -43,6 +43,11 @@ export default function ProductCard({ product, onPress }: ProductCardProps) {
     </TouchableOpacity>
   );
 }
+
+// React.memo para evitar re-renderizados innecesarios si las props no cambian
+export default React.memo(ProductCard, (prevProps, nextProps) => {
+  return prevProps.product.id === nextProps.product.id;
+});
 
 const styles = StyleSheet.create({
   cardContainer: {

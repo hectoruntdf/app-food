@@ -7,7 +7,7 @@ interface ScoreBadgeProps {
   score: string;
 }
 
-export default function ScoreBadge({ type, score }: ScoreBadgeProps) {
+function ScoreBadge({ type, score }: ScoreBadgeProps) {
   const validScore = score ? score.toString().trim().toUpperCase() : '?';
   
   const badgeConfig = {
@@ -28,6 +28,8 @@ export default function ScoreBadge({ type, score }: ScoreBadgeProps) {
     </View>
   );
 }
+
+export default React.memo(ScoreBadge);
 
 const styles = StyleSheet.create({
   badge: {

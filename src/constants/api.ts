@@ -1,0 +1,1 @@
+export const PAGE_SIZE = 10; // Número de productos por página

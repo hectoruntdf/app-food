@@ -1,35 +1,59 @@
-import React from 'react';
+import { useCallback, useMemo, useRef} from 'react';
 import { ActivityIndicator, View, Text, StyleSheet, FlatList } from 'react-native';
-import { useRouter, Stack } from 'expo-router';
+import { useRouter } from 'expo-router';
 import ProductCard from '@/src/components/ProductCard';
-import Search from '@/src/components/SearchBar';
 import { productDetailRoute } from '@/src/navigation/routes';
 import { Product } from '../types/product';
 import { NAV_COLORS } from '../constants/theme';
 
 type ProductListLayoutProps = {
-  products: Product[];
+  data: { pages: { products: Product[] }[] } | undefined;
   isLoading: boolean;
   error: any;
   title: string;
   emptyMessage?: string; // personalizar el mensaje de "no hay productos"
+  onLoadMore: () => void; 
+  isFetchingNextPage: boolean;
+  hasNextPage: boolean;
 };
 
 export default function ProductListLayout({ 
-  products, 
+  data, 
   isLoading, 
   error, 
   title, 
-  emptyMessage = "No hay productos disponibles." 
+  emptyMessage = "No hay productos disponibles.",
+  onLoadMore,
+  isFetchingNextPage,
+  hasNextPage,
 }: ProductListLayoutProps) {
   
   const router = useRouter();
+
+  const momentumGuard = useRef(false); // Referencia para almacenar el tiempo del último scroll
+
+  // useMemo para memorizar la lista de productos y evitar recalcularla en cada renderizado
+  const products = useMemo(
+    () => data?.pages.flatMap(page => page.products) ?? [], [data]);
+
+  // useCallback para memorizar la función de manejo de clic en un producto y evitar recrearla en cada renderizado
+  const handlePressProduct = useCallback((id: string) => {
+    router.push(productDetailRoute(id));
+  }, [router]);
+
+  // useCallback para memorizar la función de renderizado de cada producto y evitar recrearla en cada renderizado
+  const renderItem = useCallback(({ item }: { item: Product }) => (
+    <ProductCard product={item} onPressItem={handlePressProduct} />
+  ), [handlePressProduct]);
+
+  // useCallback para memorizar la función de renderizado del separador entre productos y evitar recrearla en cada renderizado
+  const renderSeparator = useCallback(() => <View style={{ height: 15 }} />, []);
 
   if (isLoading) {
     return <ActivityIndicator size="large" color="#0000ff" style={{ marginTop: 50 }} />;
   } 
   
-  if (error || !products || products.length === 0) {
+  if (products.length === 0) {
     return <Text style={{ textAlign: 'center', marginTop: 50 }}>{emptyMessage}</Text>;
   }
 
@@ -41,28 +65,46 @@ export default function ProductListLayout({
 
       <FlatList
         data={products}
-        keyExtractor={(item) => item.id.toString()}
+        keyExtractor={(item, index) => `${item.id}-${index}`}
         showsVerticalScrollIndicator={false}
         contentContainerStyle={styles.listContent}
-        
+
+        // Gestión de memoria y rendimiento para listas largas
+        initialNumToRender={10}       
+        maxToRenderPerBatch={5}       
+        windowSize={5}                
+        removeClippedSubviews={true}
+        //
+
+        onMomentumScrollBegin={() => { momentumGuard.current = true; }}
+
+        onEndReached={() => {
+          if (hasNextPage && !isFetchingNextPage && momentumGuard.current) {
+            onLoadMore();
+            momentumGuard.current = false; // Resetear el guardián de momentum después de cargar más
+          }
+        }}
+        onEndReachedThreshold={0.3}
+
+        ListFooterComponent={
+          isFetchingNextPage ? (
+            <ActivityIndicator size="small" color="#0000ff" style={{ marginVertical: 20 }} />
+          ) : error? (
+            <Text style={{ textAlign: 'center', marginVertical: 20, color: 'red' }}>
+              Error al cargar más productos. Intenta nuevamente.
+            </Text>
+          ) : null
+        }
         ListHeaderComponent={
           <View style={styles.headerComponentContainer}>
             <View style={styles.titleSection}>
               <Text style={styles.mainTitle}>{displayTitle}</Text>
               <Text style={styles.subTitle}>{products.length} ITEMS FOUND</Text>
             </View>
-
-            <Search placeholder={`Search ${displayTitle}...`} />
           </View>
         }
-
-        renderItem={({ item }) => (
-          <ProductCard
-            product={item}
-            onPress={() => router.push(productDetailRoute(item.id.toString()))}
-          />
-        )}
-        ItemSeparatorComponent={() => <View style={{ height: 15 }} />}
+        renderItem = { renderItem }
+        ItemSeparatorComponent={ renderSeparator }
       />
     </View>
   );

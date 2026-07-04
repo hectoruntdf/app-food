@@ -1,3 +1,4 @@
+import { PAGE_SIZE } from "../constants/api";
 
 const BASE_URL = process.env.EXPO_PUBLIC_API_URL;
 const CONTACTO = process.env.USER_AGENT_CONTACT || "https://my-app-food.com";
@@ -27,12 +28,13 @@ export const fetchProductByBarcode = async (barcode: string) => {
   }
 };
 
-export const fetchProductsByCategory = async (categorySlug: string) => {
+export const fetchProductsByCategory = async (categorySlug: string, page: number = 1) => {
   try {
     const params = new URLSearchParams({
       categories_tags: categorySlug,
       fields: "code,product_name,brands,image_url,nutriscore_grade,ecoscore_grade",
-      page_size: "20",
+      page_size: String(PAGE_SIZE),
+      page: String(page),
     });
 
     const url = `${BASE_URL}/v2/search?${params.toString()}`;
@@ -50,12 +52,13 @@ export const fetchProductsByCategory = async (categorySlug: string) => {
   }
 };
 
-export const fetchProductsByBrand = async (brandSlug: string) => {
+export const fetchProductsByBrand = async (brandSlug: string, page: number = 1) => {
   try {
     const params = new URLSearchParams({
       brands_tags: brandSlug,
       fields: "code,product_name,brands,image_url,nutriscore_grade,ecoscore_grade",
-      page_size: "20",
+      page_size: String(PAGE_SIZE),
+      page: String(page),
     });
 
     const url = `${BASE_URL}/v2/search?${params.toString()}`;
@@ -73,13 +76,14 @@ export const fetchProductsByBrand = async (brandSlug: string) => {
   }
 };
 
-export const fetchProductsByTaste = async (tasteSlug: string) => {
+export const fetchProductsByTaste = async (tasteSlug: string, page: number = 1) => {
   try {
     const params = new URLSearchParams({
       // OpenFoodFacts usa labels_tags
       labels_tags: tasteSlug, 
       fields: "code,product_name,brands,image_url,nutriscore_grade,ecoscore_grade",
-      page_size: "20",
+      page_size: String(PAGE_SIZE),
+      page: String(page),
     });
 
     const url = `${BASE_URL}/v2/search?${params.toString()}`;

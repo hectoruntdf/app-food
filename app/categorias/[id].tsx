@@ -8,15 +8,25 @@ export default function CategoryScreen() {
   const categoryId = Array.isArray(id) ? id[0] : id; 
 
   // hook específico de categorías
-  const { data: products, isLoading, error } = useProductsByCategory(categoryId);
+  const { 
+    data,
+    isLoading,
+    error,
+    fetchNextPage,
+    isFetchingNextPage,
+    hasNextPage,
+   } = useProductsByCategory(categoryId);
 
   return (
     <ProductListLayout 
-      products={products || []}
+      data={data}
       isLoading={isLoading}
       error={error}
       title={categoryId}
       emptyMessage="No hay productos en esta categoría."
+      onLoadMore={fetchNextPage}
+      isFetchingNextPage={isFetchingNextPage}
+      hasNextPage={!!hasNextPage}
     />
   );
 }

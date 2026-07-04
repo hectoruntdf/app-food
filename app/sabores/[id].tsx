@@ -8,7 +8,14 @@ export default function TasteScreen() {
   
   const tasteId = Array.isArray(id) ? id[0] : id;
 
-  const { data: products, isLoading, error } = useProductsByTaste(tasteId);
+  const { 
+    data: products,
+    isLoading,
+    error,
+    fetchNextPage,
+    isFetchingNextPage,
+    hasNextPage,
+  } = useProductsByTaste(tasteId);
 
   const formattedTitle = tasteId 
     ? tasteId.charAt(0).toUpperCase() + tasteId.slice(1) 
@@ -16,7 +23,10 @@ export default function TasteScreen() {
 
   return (
     <ProductListLayout
-      products={products || []}
+      data={products}
+      onLoadMore={fetchNextPage}
+      isFetchingNextPage={isFetchingNextPage}
+      hasNextPage={!!hasNextPage}
       isLoading={isLoading}
       error={error}
       title={formattedTitle}
