@@ -15,6 +15,7 @@ type ProductListLayoutProps = {
   onLoadMore: () => void; 
   isFetchingNextPage: boolean;
   hasNextPage: boolean;
+  searchComponent?: React.ReactNode;
 };
 
 export default function ProductListLayout({ 
@@ -26,6 +27,7 @@ export default function ProductListLayout({
   onLoadMore,
   isFetchingNextPage,
   hasNextPage,
+  searchComponent,
 }: ProductListLayoutProps) {
   
   const router = useRouter();
@@ -48,14 +50,6 @@ export default function ProductListLayout({
 
   // useCallback para memorizar la función de renderizado del separador entre productos y evitar recrearla en cada renderizado
   const renderSeparator = useCallback(() => <View style={{ height: 15 }} />, []);
-
-  if (isLoading) {
-    return <ActivityIndicator size="large" color="#0000ff" style={{ marginTop: 50 }} />;
-  } 
-  
-  if (products.length === 0) {
-    return <Text style={{ textAlign: 'center', marginTop: 50 }}>{emptyMessage}</Text>;
-  }
 
   // Formateamos el título para que la primera letra sea mayúscula
   const displayTitle = title ? title.charAt(0).toUpperCase() + title.slice(1) : '';
@@ -95,12 +89,25 @@ export default function ProductListLayout({
             </Text>
           ) : null
         }
+
+
+        ListEmptyComponent={
+          isLoading ? (
+            <ActivityIndicator size="large" color="#0000ff" style={{ marginTop: 50 }} />
+          ) : (
+            <Text style={{ textAlign: 'center', marginTop: 50, color: '#6b7280' }}>
+              {emptyMessage}
+            </Text>
+          )
+        }
+
         ListHeaderComponent={
           <View style={styles.headerComponentContainer}>
             <View style={styles.titleSection}>
               <Text style={styles.mainTitle}>{displayTitle}</Text>
               <Text style={styles.subTitle}>{products.length} ITEMS FOUND</Text>
             </View>
+            {searchComponent}
           </View>
         }
         renderItem = { renderItem }
