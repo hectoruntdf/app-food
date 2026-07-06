@@ -43,3 +43,8 @@ export const NAV_COLORS = {
   HEADER_TINT: '#166534',
   HEADER_BACKGROUND: '#FAFAFA',
 } as const;
+
+export const APP_COLORS = {
+  PRIMARY: '#166534', // El verde principal de marca
+  BACKGROUND: '#f9fafb', // Fondo claro en el mainContainer
+} as const;

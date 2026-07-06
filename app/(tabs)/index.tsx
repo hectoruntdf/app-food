@@ -9,8 +9,9 @@ import CategoryCard from '@/src/components/CategoryCard';
 import TasteTag from '@/src/components/TasteTag';
 import BrandCard from '@/src/components/BrandCard';
 import CustomHeader from '@/src/components/CustomHeader';
-import { categoryRoute, brandRoute, tasteRoute } from '@/src/navigation/routes';
+import { categoryRoute, brandRoute, tasteRoute, scannerRoute } from '@/src/navigation/routes';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
+import { APP_COLORS } from '@/src/constants/theme';
 
 // ---(HOME) ---
 export default function HomeScreen() {
@@ -82,7 +83,11 @@ export default function HomeScreen() {
         <View style={{ height: 80 }} />
       </ScrollView>
 
-      <TouchableOpacity style={styles.fab} activeOpacity={0.8}>
+      <TouchableOpacity
+        style={styles.fab}
+        activeOpacity={0.8}
+        onPress={() => router.push(scannerRoute())}
+      >
         <MaterialCommunityIcons name="barcode-scan" size={26} color="#fff" />
         
       </TouchableOpacity>
@@ -93,7 +98,7 @@ export default function HomeScreen() {
 const styles = StyleSheet.create({
   mainContainer: {
     flex: 1,
-    backgroundColor: '#f9fafb',
+    backgroundColor: APP_COLORS.BACKGROUND,
   },
   container: {
     flex: 1,
@@ -112,13 +117,13 @@ const styles = StyleSheet.create({
   },
   headerIcon: {
     fontSize: 20,
-    color: '#166534', 
+    color: APP_COLORS.PRIMARY,
     fontWeight: 'bold',
   },
   headerTitle: {
     fontSize: 18,
     fontWeight: '700',
-    color: '#166534',
+    color: APP_COLORS.PRIMARY,
   },
 
   // 2. Sección Curated Flavors

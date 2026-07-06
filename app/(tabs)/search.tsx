@@ -57,7 +57,7 @@ export default function SearchScreen() {
         emptyMessage={
           debouncedQuery 
             ? `No encontramos productos para "${debouncedQuery}".` 
-            : "Escribe el nombre, marca o categoría de un producto."
+            : "Escribe el código, categoría, marca o etiqueta."
         }
         
         onLoadMore={fetchNextPage}
@@ -68,7 +68,7 @@ export default function SearchScreen() {
           <SearchBar 
             value={inputValue}
             onChangeText={setInputValue}
-            placeholder="Código, Categoría, Marca..."
+            placeholder="Buscar..."
             onPressScanner={() => router.push(scannerRoute())}
           />
         }
